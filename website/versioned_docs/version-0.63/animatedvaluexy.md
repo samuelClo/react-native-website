@@ -22,14 +22,27 @@ const DraggableView = () => {
         dx: pan.x, // x,y are Animated.Value
         dy: pan.y,
       },
-    ]),
+    ], { useNativeDriver: false }),
     onPanResponderRelease: () => {
       Animated.spring(
         pan, // Auto-multiplexed
-        { toValue: { x: 0, y: 0 } } // Back to zero
+        { 
+          toValue: { x: 0, y: 0 }, // Back to zero
+          useNativeDriver: false,
+        }, 
       ).start();
     },
   });
+
+  return (
+    <View style={styles.container}>
+      <Animated.View
+        {...panResponder.panHandlers}
+        style={[pan.getLayout(), styles.box]}
+      />
+    </View>
+  );
+};
 
   return (
     <View style={styles.container}>
